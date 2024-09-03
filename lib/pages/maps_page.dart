@@ -8,7 +8,7 @@ import 'package:location/location.dart';
 
 class MapsPage extends StatefulWidget {
   const MapsPage({super.key});
-
+  
   @override
   State<MapsPage> createState() => _MapsPageState();
 }
