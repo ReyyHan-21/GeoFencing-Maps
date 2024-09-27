@@ -31,7 +31,7 @@ class _MapsPageState extends State<MapsPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _apiController =
       TextEditingController(); //Kontroller untuk api key
-  String _apiUrl = "192.168.1.160:1880/apps"; //Link default API
+  String _apiUrl = "192.168.1.160:1880/apps"; //Link de fault API
   //|||||||||||| End Get API ||||||||
 
   //
@@ -155,6 +155,13 @@ class _MapsPageState extends State<MapsPage> {
         // markernya.add(_currentPosition);
         // markernya.add(Marker(markerId: MarkerId(_currentPosition)));
         markernya.clear();
+
+
+        // print(datac);
+        if (data.isEmpty) {
+          _locationStreamController.add(_lokasiSaya);
+        }
+
         datac.forEach((element) {
           // print("Print ini COk :");
           // print(element['latitude']);
@@ -239,37 +246,38 @@ class _MapsPageState extends State<MapsPage> {
               );
             },
           ));
-          circlenya.addAll([
-            Circle(
-                circleId: const CircleId("lokasiSaya"),
-                center: _lokasiSaya,
-                radius: 65,
-                strokeWidth: 0,
-                fillColor: Colors.red.withOpacity(0.25)),
-            Circle(
-                circleId: const CircleId("lokasiSaya"),
-                center: _lokasiSaya,
-                radius: 45,
-                strokeWidth: 0,
-                fillColor: Colors.yellow.withOpacity(0.25)),
-            Circle(
-                circleId: const CircleId("lokasiSaya"),
-                center: _lokasiSaya,
-                radius: 25,
-                strokeWidth: 0,
-                fillColor: Colors.green.withOpacity(0.25)),
-          ]);
+          // circlenya.addAll([
+          //   Circle(
+          //       circleId: const CircleId("lokasiSaya"),
+          //       center: _lokasiSaya,
+          //       radius: 65,
+          //       strokeWidth: 0,
+          //       fillColor: Colors.red.withOpacity(0.25)),
+          //   Circle(
+          //       circleId: const CircleId("lokasiSaya"),
+          //       center: _lokasiSaya,
+          //       radius: 45,
+          //       strokeWidth: 0,
+          //       fillColor: Colors.yellow.withOpacity(0.25)),
+          //   Circle(
+          //       circleId: const CircleId("lokasiSaya"),
+          //       center: _lokasiSaya,
+          //       radius: 25,
+          //       strokeWidth: 0,
+          //       fillColor: Colors.green.withOpacity(0.25)),
+          // ]);
           _locationStreamController.add(newLocation);
         });
         // LatLng newLocation = LatLng(data['latitude'], data['longitude']);
         // print(newLocation);
         // return newLocation;
       } else {
-        throw Exception('Failed to load locations');
+        throw Exception('Failed to load data');
       }
     });
   }
 
+// Get user Location //
   Stream<LatLng> _getLokasiSaya() async* {
     // ignore: non_constant_identifier_names
     final Position = await Geolocator.getCurrentPosition();
@@ -293,6 +301,7 @@ class _MapsPageState extends State<MapsPage> {
       ]);
     });
   }
+// Get user end //
 
 // ||||||||||||||||||||||Dialog Start||||||||||||||||||||||||||||||||
   Future<void> _showMyDialog() async {
@@ -378,6 +387,9 @@ class _MapsPageState extends State<MapsPage> {
 // ||||||||||||||||||||||Dialog End||||||||||||||||||||||||||||||||||
 
 // ||||||||||||||||||||||||||VOID State End||||||||||||||||||||||||||||||||||||||
+
+
+
 
   @override
   Widget build(BuildContext context) {
